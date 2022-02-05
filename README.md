@@ -25,3 +25,6 @@ run node deploy-command.js
 run node .  
 or  
 yarn start  
+
+# Potential points of errors
+When running yarn for the first time, issues may arise with sodium. Check sodium github readme for necessary items to run sodium.
