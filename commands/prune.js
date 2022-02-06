@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { clientID } = require('../config.json');
+const { clientId } = require('../config.json');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -7,26 +7,42 @@ module.exports = {
 		.setDescription('Prunes bot messages')
 		.addIntegerOption(option =>
 			option.setName('input')
-				.setDescription('Number of messages to prune, else prune 100'),
+				.setDescription('Number of messages to prune, else prune 10'),
 		),
 	async execute(interaction) {
 		// console.log(interaction.channel.messages.purge);
-		const botMessages = await interaction.channel.messages.fetch().then(messages => {
+
+		const botMessages = async () => {
 			const bmsgs = [];
-			messages.filter(m => m.author === clientID).forEach(m => {
-				bmsgs.push(m);
-			});
-		},
-		);
+			await interaction.channel.messages.fetch({ limit:100 }).then(messages => {
+				messages.filter(m => m.author.id === clientId)
+					.forEach(m => {
+						bmsgs.push(m);
+					});
+			},
+			);
+			return bmsgs;
+		};
 		if (interaction.options._hoistedOptions[0]) {
-			await interaction.channel.bulkDelete(interaction.options._hoistedOptions[0].value, botMessages);
+			const b = botMessages();
+			setTimeout(() => {
+				b.then((msg) => {
+					const limit = msg.splice(0, interaction.options._hoistedOptions[0].value);
+					interaction.channel.bulkDelete(limit);
+				});
+			}, 1000);
 			await interaction.reply({ content: `Pruning last ${interaction.options._hoistedOptions[0].value}`, ephemeral: true });
 		}
 		else {
-			console.log('prune 100');
-
-			await interaction.channel.bulkDelete(100, botMessages);
-			await interaction.reply({ content: 'Pruning last 100 bot messages', ephemeral: true });
+			const b = botMessages();
+			setTimeout(() => {
+				b.then((msg) => {
+					const limit = msg.slice(0, 9);
+					interaction.channel.bulkDelete(limit);
+				});
+			}, 1000);
+			await interaction.reply({ content: 'Pruning last 10 bot messages', ephemeral: true });
 		}
 	},
 };
+
