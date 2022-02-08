@@ -4,16 +4,19 @@ const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 const { clientId, guildId, token } = require('./config.json');
 const { requireUncached } = require('./modules/requireUncached');
+const { commandCategories } = require('./commandCategories');
 
 
 const commands = [];
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
-for (const file of commandFiles) {
-	const command = requireUncached(`../commands/${file}`);
-	commands.push(command.data.toJSON());
-}
+commandCategories.forEach((commandCategory) => {
+	const commandnames = fs.readdirSync(`./${commandCategory}`).filter(file => file.endsWith('.js'));
+	for (const file of commandnames) {
+		const command = requireUncached(`../${commandCategory}/${file}`);
 
+		commands.push(command.data.toJSON());
+	}
+});
 const rest = new REST({ version: '9' }).setToken(token);
 
 rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: commands })

@@ -14,7 +14,6 @@
     "ffmpeg": "^0.0.4",
     "fluent-ffmpeg": "^2.1.2",
     "libsodium-wrappers": "^0.7.9",
-    "sodium": "^3.0.2",
     "ytdl-core": "^4.10.1"
   },
   "scripts": {
@@ -23,5 +22,8 @@
   },
   "devDependencies": {
     "eslint": "^8.8.0"
+  },
+  "optionalDependencies": {
+    "sodium": "^3.0.2"
   }
 }
