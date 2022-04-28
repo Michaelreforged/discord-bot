@@ -17,6 +17,8 @@
   },
   "scripts": {
     "start": "node .",
+    "start-both": "node . & yarn --cwd ./frontend start",
+    "start-react": "yarn --cwd ./frontend start",
     "lint": "eslint ."
   },
   "devDependencies": {
