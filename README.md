@@ -20,7 +20,7 @@ Discord_token = "YOUR TOKEN HERE FOR THE BOT"
 
 # OTHER SETUP INSTRUCTIONS 
 run yarn  
-run node deploy-command.js  
+run node deploy-commands.js  
 # To start up bot 
 run node .  
 or  

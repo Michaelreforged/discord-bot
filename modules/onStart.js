@@ -9,7 +9,7 @@ const onStart = () => {
 	getCommands(client);
 };
 client.on('ready', () => {
-	client.channels.cache.get('931307797876985909').send(`${summon()}`);
+	client.channels.cache.get('951375199633281124').send(`${summon()}`);
 });
 
 module.exports = {
