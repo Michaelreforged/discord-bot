@@ -36,6 +36,8 @@ module.exports = {
 				return b;
 			})
 			.then(b => {
+				// How to get integer from options without hostiedOptions
+				console.log(interaction.options.getInteger('input'));
 				if (interaction.options._hoistedOptions[0]) {
 					const check = (interaction.options._hoistedOptions[0].value) > 50 ? true : false;
 					const limit = b.splice(0, check ? 50 : interaction.options._hoistedOptions[0].value);
