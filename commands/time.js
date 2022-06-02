@@ -1,10 +1,9 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 
 const timeConvert = (time = '', offset = 0) => {
-
-	const epoch = new Date(time).getTime() / 1000 - offset;
+	const epoch = Math.floor(new Date(time).getTime() / 1000) - offset;
 	if (epoch) {
-		return `Input: ${time}
+		return `
 		 <t:${epoch} :d> is <t:${epoch}:d>
 		 <t:${epoch} :f> is <t:${epoch}:f>
 		 <t:${epoch} :t> is <t:${epoch}:t>
@@ -34,6 +33,11 @@ module.exports = {
 				))
 		.addSubcommand(subcommand =>
 			subcommand
+				.setName('now')
+				.setDescription('Give Current time in UTC, Message will delete after a min'),
+		)
+		.addSubcommand(subcommand =>
+			subcommand
 				.setName('utc')
 				.setDescription('Uses local time')
 				.addStringOption(option =>
@@ -44,12 +48,21 @@ module.exports = {
 	async execute(interaction) {
 		if (interaction.options.getSubcommand() == 'local') {
 			const time = interaction.options.getString('local');
-			return interaction.reply(`${timeConvert(time)}`);
+			return interaction.reply(`Input: ${time} \n ${timeConvert(time)}`);
+		}
+		else if (interaction.options.getSubcommand() == 'now') {
+			const time = new Date;
+			const offset = new Date().getTimezoneOffset() * 60;
+			return interaction.reply(`Input: ${time}${timeConvert(time)}\nUTC time:${timeConvert(time, -1 * offset)}`).then(() => {
+				setTimeout(() => {
+					interaction.deleteReply();
+				}, 60000);
+			});
 		}
 		else {
 			const time = interaction.options.getString('utc');
 			const offset = new Date().getTimezoneOffset() * 60;
-			return interaction.reply(`${timeConvert(time, offset)}`);
+			return interaction.reply(`Input: ${time}\n ${timeConvert(time, offset)}`);
 		}
 	},
 };
