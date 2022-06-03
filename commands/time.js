@@ -34,7 +34,7 @@ module.exports = {
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('now')
-				.setDescription('Give Current time in UTC, Message will delete after a min'),
+				.setDescription('Give Current time in UTC, Ephemeral only user can see'),
 		)
 		.addSubcommand(subcommand =>
 			subcommand
@@ -53,11 +53,8 @@ module.exports = {
 		else if (interaction.options.getSubcommand() == 'now') {
 			const time = new Date;
 			const offset = new Date().getTimezoneOffset() * 60;
-			return interaction.reply(`Input: ${time}${timeConvert(time)}\nUTC time:${timeConvert(time, -1 * offset)}`).then(() => {
-				setTimeout(() => {
-					interaction.deleteReply();
-				}, 60000);
-			});
+			return interaction.reply({ content:`
+			Input: ${time}${timeConvert(time)}\nUTC time:${timeConvert(time, -1 * offset)}`, ephemeral: true });
 		}
 		else {
 			const time = interaction.options.getString('utc');
