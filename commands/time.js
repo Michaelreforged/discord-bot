@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const { MessageActionRow, MessageButton } = require('discord.js');
 
 const timeConvert = (time = '', offset = 0) => {
 	const epoch = Math.floor(new Date(time).getTime() / 1000) - offset;
@@ -46,6 +47,19 @@ module.exports = {
 						.setRequired(true),
 				)),
 	async execute(interaction) {
+		const row = new MessageActionRow()
+			.addComponents(
+				new MessageButton()
+					.setCustomId('Update')
+					.setLabel('Update Time')
+					.setStyle('PRIMARY'),
+			);
+		const collector = interaction.channel.createMessageComponentCollector({ componentType:'BUTTON' });
+		collector.on('collect', i => {
+			const time = new Date;
+			const offset = new Date().getTimezoneOffset() * 60;
+			return i.update(`Input: ${time}${timeConvert(time)}\nUTC time:${timeConvert(time, -1 * offset)}`);
+		});
 		if (interaction.options.getSubcommand() == 'local') {
 			const time = interaction.options.getString('local');
 			return interaction.reply(`Input: ${time} \n ${timeConvert(time)}`);
@@ -53,8 +67,11 @@ module.exports = {
 		else if (interaction.options.getSubcommand() == 'now') {
 			const time = new Date;
 			const offset = new Date().getTimezoneOffset() * 60;
-			return interaction.reply({ content:`
-			Input: ${time}${timeConvert(time)}\nUTC time:${timeConvert(time, -1 * offset)}`, ephemeral: true });
+			return interaction.reply({
+				content:`Input: ${time}${timeConvert(time)}\nUTC time:${timeConvert(time, -1 * offset)}`,
+				components:[row],
+				ephemeral:true,
+			});
 		}
 		else {
 			const time = interaction.options.getString('utc');
