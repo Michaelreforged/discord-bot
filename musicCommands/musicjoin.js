@@ -16,10 +16,11 @@ module.exports = {
 		// 	return entersState(player, AudioPlayerStatus.Playing, 5e3);
 		// }
 		// await playSong();
-		// console.log('Song is ready to play!');
+		console.log('Song is ready to play!');
 		const channel = interaction.member?.voice;
+		console.log(channel);
 		if (channel) {
-			const con = await voiceConnect(channel);
+			await voiceConnect(channel);
 			try {
 				// need line below to activate player, need to create player function
 				// con.subscribe(player);
@@ -29,7 +30,9 @@ module.exports = {
 				interaction.reply('Failed to join');
 				console.error(error);
 			}
-
+		}
+		else {
+			interaction.reply('Please join a channel');
 		}
 	},
 };

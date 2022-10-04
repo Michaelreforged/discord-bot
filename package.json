@@ -17,8 +17,9 @@
   },
   "scripts": {
     "start": "node .",
-    "start-both": "node . & yarn --cwd ./frontend start",
-    "start-react": "yarn --cwd ./frontend start",
+    "docker": "docker build . -t michaelreforged/discordbot",
+    "dstart": "docker run -d --rm michaelreforged/discordbot",
+    "d-all":"yarn docker && yarn dstart",
     "lint": "eslint ."
   },
   "devDependencies": {
