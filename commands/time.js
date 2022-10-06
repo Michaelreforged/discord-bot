@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageActionRow, MessageButton } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder, ComponentType } = require('discord.js');
 
 const timeConvert = (time = '', offset = 0) => {
 	const epoch = Math.floor(new Date(time).getTime() / 1000) - offset;
@@ -47,14 +47,14 @@ module.exports = {
 						.setRequired(true),
 				)),
 	async execute(interaction) {
-		const row = new MessageActionRow()
+		const row = new ActionRowBuilder()
 			.addComponents(
-				new MessageButton()
+				new ButtonBuilder()
 					.setCustomId('Update')
 					.setLabel('Update Time')
-					.setStyle('PRIMARY'),
+					.setStyle('Primary'),
 			);
-		const collector = interaction.channel.createMessageComponentCollector({ componentType:'BUTTON' });
+		const collector = interaction.channel.createMessageComponentCollector({ componentType: ComponentType.Button });
 		collector.on('collect', i => {
 			const time = new Date;
 			const offset = new Date().getTimezoneOffset() * 60;
