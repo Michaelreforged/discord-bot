@@ -18,7 +18,7 @@
   "scripts": {
     "start": "node .",
     "docker": "docker build . -t michaelreforged/discordbot",
-    "dstart": "docker run -d --rm michaelreforged/discordbot",
+    "dstart": "docker run -d --rm --env-file .env michaelreforged/discordbot",
     "d-all":"yarn docker && yarn dstart",
     "lint": "eslint ."
   },
