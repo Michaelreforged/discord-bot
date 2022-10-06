@@ -4,12 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@discordjs/builders": "^0.12.0",
-    "@discordjs/rest": "^0.3.0",
-    "@discordjs/voice": "^0.8.0",
-    "discord-api-types": "^0.26.1",
-    "discord.js": "^13.6.0",
-    "dotenv": "^11.0.0",
+    "@discordjs/voice": "^0.11.0",
+    "discord-api-types": "^0.37.11",
+    "discord.js": "^14.5.0",
+    "dotenv": "^16.0.3",
     "ffmpeg": "^0.0.4",
     "fluent-ffmpeg": "^2.1.2",
     "libsodium-wrappers": "^0.7.9",
@@ -19,7 +17,7 @@
     "start": "node .",
     "docker": "docker build . -t michaelreforged/discordbot",
     "dstart": "docker run -d --rm --env-file .env michaelreforged/discordbot",
-    "d-all":"yarn docker && yarn dstart",
+    "d-all": "yarn docker && yarn dstart",
     "lint": "eslint ."
   },
   "devDependencies": {
