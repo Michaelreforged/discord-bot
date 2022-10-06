@@ -1,8 +1,11 @@
-const { token } = require('./config.json');
+// const { token } = require('./config.json');
+require('dotenv').config();
 const { client, onStart } = require('./modules/onStart');
 const fs = require('fs');
 const { requireUncached } = require('./modules/requireUncached');
 const { summon } = require('./responses/summon');
+
+const token = process.env.DISCORD_TOKEN;
 
 // Login to Discord with your client's token
 client.login(token);
