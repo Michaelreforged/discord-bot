@@ -18,10 +18,12 @@
     "docker": "docker build . -t michaelreforged/discordbot",
     "dstart": "docker run -d --rm --env-file .env michaelreforged/discordbot",
     "d-all": "yarn docker && yarn dstart",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "format": "prettier --write ."
   },
   "devDependencies": {
-    "eslint": "^8.8.0"
+    "eslint": "^8.8.0",
+    "prettier": "^2.7.1"
   },
   "optionalDependencies": {
     "sodium": "^3.0.2"

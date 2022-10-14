@@ -1,8 +1,5 @@
-const commandCategories = [
-	'musicCommands',
-	'commands',
-];
+const commandCategories = ["musicCommands", "commands"];
 
 module.exports = {
-	commandCategories: commandCategories,
+  commandCategories: commandCategories,
 };
